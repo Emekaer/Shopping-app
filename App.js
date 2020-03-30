@@ -6,15 +6,17 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 
 import { NavigationContainer } from "@react-navigation/native";
-import ProductNavigator from "./navigation/productNavigation";
+import SideDrawer from "./navigation/productNavigation";
 import cartReducer from "./store/reducers/cart";
+import ordersReducer from "./store/reducers/order";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   const rootReducer = combineReducers({
     products: productsReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    orders: ordersReducer
   });
 
   const store = createStore(rootReducer);
@@ -41,7 +43,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <ProductNavigator />
+        <SideDrawer />
       </NavigationContainer>
     </Provider>
   );
