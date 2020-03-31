@@ -1,17 +1,19 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 const OrderScreen = props => {
-    const orders = useSelector(state => state.orders.order)
+  const orders = useSelector(state => state.orders.order);
 
-    return(
-        <FlatList keyExtractor={item =>item.id}
+  return (
+    <View>
+      <FlatList
         data={orders}
-    renderItem={itemData => <Text>{itemData.item.totalAmount}</Text>}
-        />
-    )
+        keyExtractor={item => item.id}
+        renderItem={itemData => <Text>{itemData.item.totalAmount}</Text>}
+      />
+    </View>
+  );
 };
-
 
 export default OrderScreen;
