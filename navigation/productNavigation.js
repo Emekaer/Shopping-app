@@ -9,6 +9,7 @@ import CustomHeaderButton from "../components/UI/HeaderButton";
 import CartScreen from "../screens/shop/CartScreen";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import { Ionicons } from "@expo/vector-icons";
+import UserProductScreen from "../screens/user/UserProductScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,7 +26,7 @@ const ProductsNavigator = () => {
   return (
     <Stack.Navigator screenOptions={defaultNavOps}>
       <Stack.Screen
-        name="Products"
+        name="All Products"
         component={productOverview}
         options={navData => ({
           headerRight: () => (
@@ -95,6 +96,31 @@ const OrdersNavigation = () => {
   );
 };
 
+const userNavigation = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultNavOps}>
+      <Stack.Screen
+        name="UserProductScreen"
+        component={UserProductScreen}
+        options={navData => ({
+          headerTitle: "Your Products",
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName={"ios-menu"}
+                onPress={() => {
+                  navData.navigation.toggleDrawer();
+                }}
+              />
+            </HeaderButtons>
+          )
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const SideDrawer = () => {
   return (
     <Drawer.Navigator
@@ -120,6 +146,19 @@ const SideDrawer = () => {
           drawerIcon: drawerConfig => (
             <Ionicons
               name={"md-cart"}
+              size={23}
+              color={drawerConfig.tintColor}
+            />
+          )
+        }}
+      />
+       <Drawer.Screen
+        name="User Products"
+        component={userNavigation}
+        options={{
+          drawerIcon: drawerConfig => (
+            <Ionicons
+              name={"md-create"}
               size={23}
               color={drawerConfig.tintColor}
             />
