@@ -122,7 +122,7 @@ const userNavigation = () => {
                 title="ADD"
                 iconName={"md-create"}
                 onPress={() => {
-                  navData.navigation.navigate("EditProductScreen");
+                  navData.navigation.navigate("EditProductScreen",{productId:false});
                 }}
               />
             </HeaderButtons>
@@ -132,9 +132,23 @@ const userNavigation = () => {
       <Stack.Screen
         name="EditProductScreen"
         component={EditProductScreen}
-        options={navData => ({
-          headerTitle: "Edit Products"
-        })}
+        options={navData => {
+          const submitFn = navData.route.params.submit;
+          return {
+            headerTitle: navData.route.params.productId
+              ? "Edit Product"
+              : "Add Product",
+            headerRight: () => (
+              <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                  title="Save"
+                  iconName={"md-checkmark"}
+                  onPress={submitFn}
+                />
+              </HeaderButtons>
+            )
+          };
+        }}
       />
     </Stack.Navigator>
   );
@@ -172,7 +186,7 @@ const SideDrawer = () => {
         }}
       />
       <Drawer.Screen
-        name="User Products"
+        name="Admin"
         component={userNavigation}
         options={{
           drawerIcon: drawerConfig => (
