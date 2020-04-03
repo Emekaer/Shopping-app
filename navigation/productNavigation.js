@@ -10,6 +10,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import { Ionicons } from "@expo/vector-icons";
 import UserProductScreen from "../screens/user/UserProductScreen";
+import EditProductScreen from "../screens/user/EditProductScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -114,7 +115,25 @@ const userNavigation = () => {
                 }}
               />
             </HeaderButtons>
+          ),
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="ADD"
+                iconName={"md-create"}
+                onPress={() => {
+                  navData.navigation.navigate("EditProductScreen");
+                }}
+              />
+            </HeaderButtons>
           )
+        })}
+      />
+      <Stack.Screen
+        name="EditProductScreen"
+        component={EditProductScreen}
+        options={navData => ({
+          headerTitle: "Edit Products"
         })}
       />
     </Stack.Navigator>
@@ -152,7 +171,7 @@ const SideDrawer = () => {
           )
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="User Products"
         component={userNavigation}
         options={{

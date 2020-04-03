@@ -1,12 +1,18 @@
 import React from "react";
 import { FlatList, Button } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
 import Colors from "../../constants/Colors";
+import * as productsAction from "../../store/actions/products";
+import EditProductScreen from "./EditProductScreen";
 
 const UserProductScreen = props => {
   const userProducts = useSelector(state => state.products.userProducts);
+  const dispatch = useDispatch();
+  const editProductHandler = id => {
+    props.navigation.navigate("EditProductScreen", { productId: id });
+  };
   return (
     <FlatList
       data={userProducts}
@@ -16,17 +22,23 @@ const UserProductScreen = props => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(itemData.item.id);
+          }}
         >
           <Button
             color={Colors.primary}
             title="Edit"
-            onPress={() => {}}
+            onPress={() => {
+              editProductHandler(itemData.item.id);
+            }}
           />
           <Button
             color={Colors.primary}
             title="Delete"
-            onPress={() => {}}
+            onPress={() => {
+              dispatch(productsAction.deleteProduct(itemData.item.id));
+            }}
           />
         </ProductItem>
       )}
