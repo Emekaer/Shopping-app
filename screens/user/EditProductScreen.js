@@ -1,9 +1,8 @@
 import React, { useEffect, useCallback, useReducer } from "react";
 import {
   View,
-  Text,
+  KeyboardAvoidingView,
   StyleSheet,
-  TextInput,
   ScrollView,
   Alert,
 } from "react-native";
@@ -94,59 +93,83 @@ const EditProductScreen = (props) => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
-  const textChangeHandler = (inputIdentifier, text) => {
-    let isValid = false;
-    if (text.trim().length > 0) {
-      isValid = true;
-    } else {
-    }
-    dispatchFormState({
-      type: FORM_INPUT_UPDATE,
-      value: text,
-      isValid: isValid,
-      input: inputIdentifier,
-    });
-  };
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier,
+      });
+    },
+    [dispatchFormState]
+  );
 
   return (
-    <ScrollView>
-      <View style={styles.form}>
-        <Input
-          keyboardType="default"
-          autoCapitalize="sentences"
-          autoCorrect
-          returnKeyType="next"
-          label="Text"
-          errorText="Please add valid title!"
-        />
-        <Input
-          keyboardType="default"
-          returnKeyType="next"
-          label="ImageUrl"
-          errorText="Please add valid ImageUrl!"
-        />
-        {editedProduct ? null : (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={100}
+    >
+      <ScrollView>
+        <View style={styles.form}>
           <Input
-            keyboardType="decimal-pad"
+            id="title"
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
             returnKeyType="next"
-            label="Price"
-            errorText="Please add valid Price!"
+            label="Text"
+            errorText="Please add valid title!"
+            onInputChange={inputChangeHandler}
+            initialValue={editedProduct ? editedProduct.title : ""}
+            initiallyValid={!!editedProduct}
+            required
           />
-        )}
-        <Input
-          keyboardType="default"
-          autoCapitalize="sentences"
-          autoCorrect
-          returnKeyType="next"
-          label="Description"
-          errorText="Please add valid Description!"
-          returnKeyType="next"
-          onSubmitEditing={submitHandler}
-          multiline
-          numberOfLines={3}
-        />
-      </View>
-    </ScrollView>
+          <Input
+            id="imageUrl"
+            keyboardType="default"
+            returnKeyType="next"
+            label="ImageUrl"
+            errorText="Please add valid ImageUrl!"
+            onInputChange={inputChangeHandler}
+            initialValue={editedProduct ? editedProduct.imageUrl : ""}
+            initiallyValid={!!editedProduct}
+            required
+          />
+          {editedProduct ? null : (
+            <Input
+              id="price"
+              keyboardType="decimal-pad"
+              returnKeyType="next"
+              label="Price"
+              errorText="Please add valid Price!"
+              required
+              min={0.1}
+              onInputChange={inputChangeHandler}
+            />
+          )}
+          <Input
+            id="description"
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
+            returnKeyType="next"
+            label="Description"
+            errorText="Please add valid Description!"
+            returnKeyType="next"
+            onSubmitEditing={submitHandler}
+            multiline
+            numberOfLines={3}
+            onInputChange={inputChangeHandler}
+            initialValue={editedProduct ? editedProduct.description : ""}
+            initiallyValid={!!editedProduct}
+            required
+            minLength={5}
+          />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
