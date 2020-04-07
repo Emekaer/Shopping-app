@@ -1,27 +1,81 @@
-import React from "react";
-import { FlatList, View, Text, Button } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  FlatList,
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
+import * as productActions from "../../store/actions/products";
 import Colors from "../../constants/Colors";
 
-const ProductOverViewScreen = props => {
+const ProductOverViewScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const allProducts = useSelector(state => state.products.availableProducts);
-
   const dispatch = useDispatch();
 
+  const loadProducts = useCallback(async () => {
+    setError(undefined);
+    setIsLoading(true);
+    try {
+      await dispatch(productActions.fetchProducts());
+    } catch (err) {
+      setError(/* err.message */ true);
+    }
+    setIsLoading(false);
+  }, [dispatch, setIsLoading, setError]);
+
+
+  useEffect(() => {
+    loadProducts();
+  }, [dispatch, loadProducts]);
+
   const selectItemHandler = (id, title) => {
-    props.navigation.navigate("ProductDetail", {
+    props.navigation.navigate('ProductDetail', {
       productId: id,
-      title: title
+      productTitle: title
     });
   };
+
+  if (error == true) {
+    return (
+      <View style={styles.centered}>
+        <Text>An error occurred!</Text>
+        <Button
+          title="Try again"
+          onPress={loadProducts}
+          color={Colors.primary}
+        />
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (!isLoading && allProducts.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No products found. Maybe start adding some!</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
       data={allProducts}
-      keyExtractor={item => item.id}
-      renderItem={itemData => (
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
         <ProductItem
           title={itemData.item.title}
           image={itemData.item.imageUrl}
@@ -49,5 +103,8 @@ const ProductOverViewScreen = props => {
     />
   );
 };
+const styles = StyleSheet.create({
+  centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+});
 
 export default ProductOverViewScreen;

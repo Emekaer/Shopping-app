@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import productsReducer from "./store/reducers/products";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import ReduxThunk from "redux-thunk";
 
 import { NavigationContainer } from "@react-navigation/native";
 import SideDrawer from "./navigation/productNavigation";
@@ -16,15 +17,15 @@ export default function App() {
   const rootReducer = combineReducers({
     products: productsReducer,
     cart: cartReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
   });
 
-  const store = createStore(rootReducer);
+  const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
   const fetchFonts = () => {
     return Font.loadAsync({
       openSans: require("./assets/fonts/OpenSans-Regular.ttf"),
-      openSansBold: require("./assets/fonts/OpenSans-Bold.ttf")
+      openSansBold: require("./assets/fonts/OpenSans-Bold.ttf"),
     });
   };
 
@@ -38,7 +39,6 @@ export default function App() {
       />
     );
   }
-  
 
   return (
     <Provider store={store}>

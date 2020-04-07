@@ -56,7 +56,7 @@ const Input = (props) => {
       isValid = false;
     }
 
-    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
+    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid});
   };
 
   const lostFocusHandler = () => {
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   errorText: {
-    fontFamily: 'openSans',
-    color: 'red',
+    fontFamily: "openSans",
+    color: "red",
     fontSize: 13,
   },
 });

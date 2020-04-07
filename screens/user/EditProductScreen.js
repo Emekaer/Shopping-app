@@ -28,8 +28,8 @@ const formReducer = (state, action) => {
     }
     return {
       formIsValid: updatedFormIsValid,
-      inputValues: updatedValues,
       inputValidities: updatedValidities,
+      inputValues: updatedValues,
     };
   }
   return state;
@@ -37,10 +37,11 @@ const formReducer = (state, action) => {
 
 const EditProductScreen = (props) => {
   const { productId } = props.route.params;
-  dispatch = useDispatch();
+
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
   );
+  const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -59,11 +60,9 @@ const EditProductScreen = (props) => {
   });
 
   const submitHandler = useCallback(() => {
-    if (!formState.formIsValid) {
+    if (formState.formIsValid == false) {
       Alert.alert("Wrong input!", "Please Check for errors in the form.", [
-        {
-          text: "Okay",
-        },
+        { text: "Okay" }
       ]);
       return;
     }
@@ -91,7 +90,7 @@ const EditProductScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
-  }, [submitHandler]);
+  }, [props.navigation, submitHandler]);
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -119,7 +118,7 @@ const EditProductScreen = (props) => {
             autoCapitalize="sentences"
             autoCorrect
             returnKeyType="next"
-            label="Text"
+            label="Title"
             errorText="Please add valid title!"
             onInputChange={inputChangeHandler}
             initialValue={editedProduct ? editedProduct.title : ""}
@@ -130,7 +129,7 @@ const EditProductScreen = (props) => {
             id="imageUrl"
             keyboardType="default"
             returnKeyType="next"
-            label="ImageUrl"
+            label="Image Url"
             errorText="Please add valid ImageUrl!"
             onInputChange={inputChangeHandler}
             initialValue={editedProduct ? editedProduct.imageUrl : ""}
