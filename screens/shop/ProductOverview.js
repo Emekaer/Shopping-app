@@ -15,8 +15,8 @@ import Colors from "../../constants/Colors";
 
 const ProductOverViewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const allProducts = useSelector(state => state.products.availableProducts);
+  const [error, setError] = useState();
+  const allProducts = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
   const loadProducts = useCallback(async () => {
@@ -25,24 +25,29 @@ const ProductOverViewScreen = (props) => {
     try {
       await dispatch(productActions.fetchProducts());
     } catch (err) {
-      setError(/* err.message */ true);
+      setError(err.message );
     }
     setIsLoading(false);
   }, [dispatch, setIsLoading, setError]);
 
+  useEffect(() => {
+    const focusSub = props.navigation.addListener("focus", loadProducts);
+
+    return focusSub;
+  }, [loadProducts]);
 
   useEffect(() => {
     loadProducts();
   }, [dispatch, loadProducts]);
 
   const selectItemHandler = (id, title) => {
-    props.navigation.navigate('ProductDetail', {
+    props.navigation.navigate("ProductDetail", {
       productId: id,
-      productTitle: title
+      productTitle: title,
     });
   };
 
-  if (error == true) {
+  if (error) {
     return (
       <View style={styles.centered}>
         <Text>An error occurred!</Text>

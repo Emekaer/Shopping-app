@@ -5,10 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
+  Keyboard,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import * as productAction from "../../store/actions/products";
 import Input from "../../components/UI/Input";
+import { CommonActions } from "@react-navigation/native";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -60,9 +62,11 @@ const EditProductScreen = (props) => {
   });
 
   const submitHandler = useCallback(() => {
-    if (formState.formIsValid == false) {
+  
+    if (!formState.formIsValid) {
+      
       Alert.alert("Wrong input!", "Please Check for errors in the form.", [
-        { text: "Okay" }
+        { text: "Okay" },
       ]);
       return;
     }
@@ -85,12 +89,15 @@ const EditProductScreen = (props) => {
         )
       );
     }
+ 
     props.navigation.goBack();
-  }, [dispatch, productId, formState]);
+  }, [dispatch, productId, formState, Keyboard]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
-  }, [props.navigation, submitHandler]);
+    props.navigation.dispatch(
+      CommonActions.setParams({ submit: submitHandler })
+    );
+  }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {

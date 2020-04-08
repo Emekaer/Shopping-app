@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const defaultNavOps = {
@@ -57,7 +58,7 @@ const ProductsNavigator = () => {
       <Stack.Screen
         name="ProductDetail"
         options={navData => ({
-          title: navData.route.params.title
+          title: navData.route.params.productTitle
         })}
         component={ProductDetail}
       />
