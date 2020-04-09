@@ -7,7 +7,7 @@ import * as Font from "expo-font";
 import ReduxThunk from "redux-thunk";
 
 import { NavigationContainer } from "@react-navigation/native";
-import SideDrawer from "./navigation/productNavigation";
+import MainNavigator from "./navigation/productNavigation";
 import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/order";
 
@@ -43,7 +43,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <SideDrawer />
+        <MainNavigator />
       </NavigationContainer>
     </Provider>
   );

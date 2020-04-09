@@ -11,18 +11,17 @@ import OrderScreen from "../screens/shop/OrdersScreen";
 import { Ionicons } from "@expo/vector-icons";
 import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
-
-
+import AuthScreen from "../screens/user/AuthScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const defaultNavOps = {
   headerStyle: {
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.primary,
   },
   headerTitleStyle: {
-    fontFamily: "openSansBold"
-  }
+    fontFamily: "openSansBold",
+  },
 };
 
 const ProductsNavigator = () => {
@@ -31,7 +30,7 @@ const ProductsNavigator = () => {
       <Stack.Screen
         name="All Products"
         component={productOverview}
-        options={navData => ({
+        options={(navData) => ({
           headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
               <Item
@@ -53,21 +52,21 @@ const ProductsNavigator = () => {
                 }}
               />
             </HeaderButtons>
-          )
+          ),
         })}
       />
       <Stack.Screen
         name="ProductDetail"
-        options={navData => ({
-          title: navData.route.params.productTitle
+        options={(navData) => ({
+          title: navData.route.params.productTitle,
         })}
         component={ProductDetail}
       />
       <Stack.Screen
         name="CartScreen"
         component={CartScreen}
-        options={navData => ({
-          headerTitle: "Your Cart"
+        options={(navData) => ({
+          headerTitle: "Your Cart",
         })}
       />
     </Stack.Navigator>
@@ -80,7 +79,7 @@ const OrdersNavigation = () => {
       <Stack.Screen
         name="OrderScreen"
         component={OrderScreen}
-        options={navData => ({
+        options={(navData) => ({
           headerTitle: "Your Orders",
           headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
@@ -92,7 +91,7 @@ const OrdersNavigation = () => {
                 }}
               />
             </HeaderButtons>
-          )
+          ),
         })}
       />
     </Stack.Navigator>
@@ -105,7 +104,7 @@ const userNavigation = () => {
       <Stack.Screen
         name="UserProductScreen"
         component={UserProductScreen}
-        options={navData => ({
+        options={(navData) => ({
           headerTitle: "Your Products",
           headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
@@ -124,17 +123,19 @@ const userNavigation = () => {
                 title="ADD"
                 iconName={"md-create"}
                 onPress={() => {
-                  navData.navigation.navigate("EditProductScreen",{productId:false});
+                  navData.navigation.navigate("EditProductScreen", {
+                    productId: false,
+                  });
                 }}
               />
             </HeaderButtons>
-          )
+          ),
         })}
       />
       <Stack.Screen
         name="EditProductScreen"
         component={EditProductScreen}
-        options={navData => {
+        options={(navData) => {
           const submitFn = navData.route.params.submit;
           return {
             headerTitle: navData.route.params.productId
@@ -148,7 +149,7 @@ const userNavigation = () => {
                   onPress={submitFn}
                 />
               </HeaderButtons>
-            )
+            ),
           };
         }}
       />
@@ -165,43 +166,67 @@ const SideDrawer = () => {
         name="Products"
         component={ProductsNavigator}
         options={{
-          drawerIcon: drawerConfig => (
+          drawerIcon: (drawerConfig) => (
             <Ionicons
               name={"md-list"}
               size={23}
               color={drawerConfig.tintColor}
             />
-          )
+          ),
         }}
       />
       <Drawer.Screen
         name="Orders"
         component={OrdersNavigation}
         options={{
-          drawerIcon: drawerConfig => (
+          drawerIcon: (drawerConfig) => (
             <Ionicons
               name={"md-cart"}
               size={23}
               color={drawerConfig.tintColor}
             />
-          )
+          ),
         }}
       />
       <Drawer.Screen
         name="Admin"
         component={userNavigation}
         options={{
-          drawerIcon: drawerConfig => (
+          drawerIcon: (drawerConfig) => (
             <Ionicons
               name={"md-create"}
               size={23}
               color={drawerConfig.tintColor}
             />
-          )
+          ),
         }}
       />
     </Drawer.Navigator>
   );
 };
 
-export default SideDrawer;
+const AuthNavigator = () => {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="AuthScreen" component={AuthScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const isLoggedIn = false;
+const MainNavigator = () => {
+  return (
+    <Stack.Navigator  screenOptions={defaultNavOps}>
+      <Stack.Screen
+        name="Here"
+        component={isLoggedIn ? SideDrawer : AuthNavigator}
+        options={(navData) => {
+          return {
+            headerTitle: "Login",
+          };
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+export default MainNavigator;
