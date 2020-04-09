@@ -1,14 +1,23 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet, Button } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
 import * as orderActions from "../../store/actions/order";
 
-const CartScreen = props => {
-  const cartTotal = useSelector(state => state.cart.totalAmount);
-  const cartItems = useSelector(state => {
+const CartScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const cartTotal = useSelector((state) => state.cart.totalAmount);
+  const cartItems = useSelector((state) => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
       transformedCartItems.push({
@@ -16,31 +25,47 @@ const CartScreen = props => {
         productTitle: state.cart.items[key].productTitle,
         productPrice: state.cart.items[key].productPrice,
         quantity: state.cart.items[key].quantity,
-        sum: state.cart.items[key].sum
+        sum: state.cart.items[key].sum,
       });
     }
-    return transformedCartItems.sort((a,b) => a.productId > b.productId ? 1 :-1);
+    return transformedCartItems.sort((a, b) =>
+      a.productId > b.productId ? 1 : -1
+    );
   });
 
   const dispatch = useDispatch();
+
+  const sendOrderHandler = async () => {
+    setIsLoading(true);
+    await dispatch(orderActions.addOrder(cartItems, cartTotal));
+    setIsLoading(false);
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
-          Total: <Text style={styles.amount}>${Math.round(cartTotal.toFixed(2)*100)/100}</Text>
+          Total:{" "}
+          <Text style={styles.amount}>
+            ${Math.round(cartTotal.toFixed(2) * 100) / 100}
+          </Text>
         </Text>
-        <Button
-          color={Colors.accent}
-          title="Order Now"
-          disabled={cartItems.length === 0}
-          onPress={()=> dispatch(orderActions.addOrder(cartItems,cartTotal))}
-        />
+        {isLoading ? (
+          <ActivityIndicator size="small" color={Colors.primary} />
+        ) : (
+          <Button
+            color={Colors.accent}
+            title="Order Now"
+            disabled={cartItems.length === 0}
+            onPress={sendOrderHandler}
+          />
+        )}
       </View>
       <View>
         <FlatList
           data={cartItems}
-          keyExtractor={item => item.productId}
-          renderItem={itemData => (
+          keyExtractor={(item) => item.productId}
+          renderItem={(itemData) => (
             <CartItem
               quantity={itemData.item.quantity}
               title={itemData.item.productTitle}
@@ -59,7 +84,7 @@ const CartScreen = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    margin: 20
+    margin: 20,
   },
   summary: {
     flexDirection: "row",
@@ -73,15 +98,15 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     borderRadius: 10,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   summaryText: {
     fontFamily: "openSansBold",
-    fontSize: 18
+    fontSize: 18,
   },
   amount: {
-    color: Colors.primary
-  }
+    color: Colors.primary,
+  },
 });
 
 export default CartScreen;
