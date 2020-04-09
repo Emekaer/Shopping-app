@@ -2,21 +2,21 @@ import { ADD_ORDER } from "../actions/order";
 import Order from "../../models/order";
 
 const initialState = {
-  order: []
+  order: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_ORDER:
       const newOrder = new Order(
-        new Date().toString(),
+        action.orderData.id,
         action.orderData.items,
         action.orderData.amount,
-        new Date()
+        action.orderData.date
       );
       return {
         ...state,
-        order: state.order.concat(newOrder)
+        order: state.order.concat(newOrder),
       };
   }
 
