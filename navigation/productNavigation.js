@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthScreen from "../screens/user/AuthScreen";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -207,25 +208,30 @@ const SideDrawer = () => {
 
 const AuthNavigator = () => {
   return (
-    <Stack.Navigator headerMode="none">
-      <Stack.Screen name="AuthScreen" component={AuthScreen} />
+    <Stack.Navigator screenOptions={defaultNavOps}>
+      <Stack.Screen name="Login" component={AuthScreen} />
     </Stack.Navigator>
   );
 };
 
-const isLoggedIn = false;
 const MainNavigator = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isSignIn);
+  console.log(isLoggedIn);
   return (
-    <Stack.Navigator  screenOptions={defaultNavOps}>
-      <Stack.Screen
-        name="Here"
-        component={isLoggedIn ? SideDrawer : AuthNavigator}
-        options={(navData) => {
-          return {
-            headerTitle: "Login",
-          };
-        }}
-      />
+    <Stack.Navigator headerMode="none">
+      {isLoggedIn ? (
+        <Stack.Screen name="Here" component={SideDrawer} />
+      ) : (
+        <Stack.Screen
+          name="Here"
+          component={AuthNavigator}
+          options={() => {
+            return {
+              headerTitle: "Login",
+            };
+          }}
+        />
+      )}
     </Stack.Navigator>
   );
 };
