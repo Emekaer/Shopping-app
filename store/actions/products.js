@@ -5,7 +5,8 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 import Product from "../../models/product";
 
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     // any async code you want!
     try {
       const response = await fetch(
@@ -32,7 +33,11 @@ export const fetchProducts = () => {
         );
       }
 
-      dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+      dispatch({
+        type: SET_PRODUCTS,
+        products: loadedProducts,
+        userProducts: loadedProducts.filter((prod) => prod.ownerId === userId),
+      });
     } catch (err) {
       // send to custom analytics server
       throw err;
@@ -40,25 +45,26 @@ export const fetchProducts = () => {
   };
 };
 export const deleteProduct = (productId) => {
-  return async (dispatch,getState) => {
-    const token = getState().auth.token
-   const response = await fetch(
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const response = await fetch(
       `https://rn-shopping-app-98411.firebaseio.com/products/${productId}.json?auth=${token}`,
       {
         method: "DELETE",
-        
       }
     );
-    if(!response.ok){
-      throw new Error('Something went wrong')
+    if (!response.ok) {
+      throw new Error("Something went wrong");
     }
 
-  dispatch({ type: DELETE_PRODUCT, pId: productId })
-}};
+    dispatch({ type: DELETE_PRODUCT, pId: productId });
+  };
+};
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch,getState) => {
-    const token = getState().auth.token
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
       `https://rn-shopping-app-98411.firebaseio.com/products.json?auth=${token}`,
       {
@@ -71,6 +77,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          ownerId: userId,
         }),
       }
     );
@@ -85,14 +92,15 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: userId,
       },
     });
   };
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async (dispatch,getState) => {
-    const token = getState().auth.token
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     const response = await fetch(
       `https://rn-shopping-app-98411.firebaseio.com/products/${id}.json?auth=${token}`,
       {
@@ -107,9 +115,9 @@ export const updateProduct = (id, title, description, imageUrl) => {
         }),
       }
     );
-      if(!response.ok){
-        throw new Error('SOmething went wrong')
-      }
+    if (!response.ok) {
+      throw new Error("SOmething went wrong");
+    }
     dispatch({
       type: UPDATE_PRODUCT,
       pId: id,
