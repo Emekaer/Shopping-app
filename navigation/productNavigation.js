@@ -216,8 +216,7 @@ const AuthNavigator = () => {
 
 const MainNavigator = () => {
   const isLoggedIn = useSelector((state) => state.auth.isSignIn);
-  console.log(isLoggedIn);
-  return (
+   return (
     <Stack.Navigator headerMode="none">
       {isLoggedIn ? (
         <Stack.Screen name="Here" component={SideDrawer} />
