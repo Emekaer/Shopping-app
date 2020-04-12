@@ -1,5 +1,6 @@
 import Order from "../../models/order";
 
+
 export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
@@ -70,7 +71,7 @@ export const addOrder = (cartItems, totalAmount) => {
         id: resData.name,
         items: cartItems,
         amount: totalAmount,
-        date: date,
+        date: date, 
       },
     });
   };

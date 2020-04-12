@@ -13,6 +13,8 @@ import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthScreen from "../screens/user/AuthScreen";
 import { useSelector } from "react-redux";
+import StartupScreen from "../screens/StartupScreen";
+import {  AsyncStorage } from "react-native";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -216,7 +218,16 @@ const AuthNavigator = () => {
 
 const MainNavigator = () => {
   const isLoggedIn = useSelector((state) => state.auth.isSignIn);
-   return (
+  console.log(isLoggedIn + "lo");
+
+  if(!isLoggedIn){
+    console.log(isLoggedIn + "chacked");
+    return (
+    <Stack.Navigator>
+    <Stack.Screen name="Loading" component={StartupScreen} />
+    </Stack.Navigator>)}
+
+  return (
     <Stack.Navigator headerMode="none">
       {isLoggedIn ? (
         <Stack.Screen name="Here" component={SideDrawer} />
@@ -234,4 +245,6 @@ const MainNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+
 export default MainNavigator;

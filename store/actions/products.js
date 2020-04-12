@@ -7,6 +7,7 @@ import Product from "../../models/product";
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
     const userId = getState().auth.userId;
+
     // any async code you want!
     try {
       const response = await fetch(
@@ -24,7 +25,7 @@ export const fetchProducts = () => {
         loadedProducts.push(
           new Product(
             key,
-            "u1",
+            resData[key].ownerId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
