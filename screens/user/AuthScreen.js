@@ -62,7 +62,7 @@ const AuthScreen = (props) => {
     if (error) {
       Alert.alert("An Error Occured!", error, [
         { text: "Sign Up", onPress: () => setIsSignUp(true), style: "cancel" },
-        { text: "Okay" },
+        { text: "Try Again" },
       ]);
     }
   }, [error]);

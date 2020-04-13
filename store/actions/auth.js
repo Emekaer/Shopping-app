@@ -1,6 +1,7 @@
 /* export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN"; */
 export const AUTHENTICATE = "AUTHENTICATE";
+export const LOGOUT = "LOGOUT";
 import { AsyncStorage } from "react-native";
 
 export const authenticate = (userId, token) => {
@@ -82,6 +83,13 @@ export const login = (email, password) => {
     );
     saveDataToStorarage(resData.idToken, resData.localId, expirationDate);
   };
+};
+
+export const logout = () => {
+  return async dispatch=>{ 
+    
+    await dispatch({type: LOGOUT})
+    saveDataToStorarage(false,false,new Date())};
 };
 
 const saveDataToStorarage = (token, userId, expirationDate) => {

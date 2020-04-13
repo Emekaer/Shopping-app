@@ -1,23 +1,30 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import productOverview from "../screens/shop/ProductOverview";
-import Colors from "../constants/Colors";
-import ProductDetail from "../screens/shop/ProductDetails";
+import {
+  createDrawerNavigator,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/HeaderButton";
+import { Ionicons } from "@expo/vector-icons";
+
+import productOverview from "../screens/shop/ProductOverview";
 import CartScreen from "../screens/shop/CartScreen";
 import OrderScreen from "../screens/shop/OrdersScreen";
-import { Ionicons } from "@expo/vector-icons";
+import ProductDetail from "../screens/shop/ProductDetails";
 import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthScreen from "../screens/user/AuthScreen";
-import { useSelector } from "react-redux";
 import StartupScreen from "../screens/StartupScreen";
-import {  AsyncStorage } from "react-native";
+
+import { useSelector, useDispatch } from "react-redux";
+import { SafeAreaView, Button, View } from "react-native";
+import * as authActions from "../store/actions/auth";
+import Colors from "../constants/Colors";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
 const defaultNavOps = {
   headerStyle: {
     backgroundColor: Colors.primary,
@@ -161,9 +168,26 @@ const userNavigation = () => {
 };
 
 const SideDrawer = () => {
+  const dispatch = useDispatch();
   return (
     <Drawer.Navigator
       drawerContentOptions={{ activeTintColor: Colors.primary }}
+      drawerContent={(props) => {
+        return (
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <SafeAreaView forceInsert={{ top: "always", horizontal: "never" }}>
+              <DrawerItemList {...props} />
+              <Button
+                title="Logout"
+                color={Colors.primary}
+                onPress={() => {
+                  dispatch(authActions.logout());
+                }}
+              />
+            </SafeAreaView>
+          </View>
+        );
+      }}
     >
       <Drawer.Screen
         name="Products"
@@ -218,18 +242,19 @@ const AuthNavigator = () => {
 
 const MainNavigator = () => {
   const isLoggedIn = useSelector((state) => state.auth.isSignIn);
-  console.log(isLoggedIn + "lo");
+  const token = useSelector((state) => state.auth.token);
 
-  if(!isLoggedIn){
-    console.log(isLoggedIn + "chacked");
+  if (!isLoggedIn) {
     return (
-    <Stack.Navigator>
-    <Stack.Screen name="Loading" component={StartupScreen} />
-    </Stack.Navigator>)}
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="Loading" component={StartupScreen} />
+      </Stack.Navigator>
+    );
+  }
 
   return (
     <Stack.Navigator headerMode="none">
-      {isLoggedIn ? (
+      {isLoggedIn && token ? (
         <Stack.Screen name="Here" component={SideDrawer} />
       ) : (
         <Stack.Screen
@@ -245,6 +270,5 @@ const MainNavigator = () => {
     </Stack.Navigator>
   );
 };
-
 
 export default MainNavigator;
