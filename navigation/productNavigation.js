@@ -254,7 +254,7 @@ const MainNavigator = () => {
 
   return (
     <Stack.Navigator headerMode="none">
-      {isLoggedIn && token ? (
+      {isLoggedIn && !!token ? (
         <Stack.Screen name="Here" component={SideDrawer} />
       ) : (
         <Stack.Screen
