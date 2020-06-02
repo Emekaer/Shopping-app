@@ -12,23 +12,27 @@ import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
 import * as productActions from "../../store/actions/products";
 import Colors from "../../constants/Colors";
+import { Snackbar } from "react-native-paper";
 
 const ProductOverViewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState();
+  const [thisProduct, setThisProduct] = useState("");
+
   const allProducts = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
   const loadProducts = useCallback(async () => {
     setError(undefined);
-    setIsRefreshing(true)
+    setIsRefreshing(true);
     try {
       await dispatch(productActions.fetchProducts());
     } catch (err) {
-      setError(err.message );
+      setError(err.message);
     }
-    setIsRefreshing(false)
+    setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
@@ -38,9 +42,8 @@ const ProductOverViewScreen = (props) => {
   }, [loadProducts]);
 
   useEffect(() => {
-    setIsLoading(true)
-    loadProducts().then(
-    setIsLoading(false))
+    setIsLoading(true);
+    loadProducts().then(setIsLoading(false));
   }, [dispatch, loadProducts]);
 
   const selectItemHandler = (id, title) => {
@@ -48,6 +51,12 @@ const ProductOverViewScreen = (props) => {
       productId: id,
       productTitle: title,
     });
+  };
+
+  const cartHandler = (item) => {
+    setThisProduct(item.title);
+    setIsVisible(true);
+    dispatch(cartActions.addToCart(item));
   };
 
   if (error) {
@@ -80,37 +89,45 @@ const ProductOverViewScreen = (props) => {
   }
 
   return (
-    <FlatList
-    onRefresh={loadProducts}
-    refreshing={isRefreshing}
-      data={allProducts}
-      keyExtractor={(item) => item.id}
-      renderItem={(itemData) => (
-        <ProductItem
-          title={itemData.item.title}
-          image={itemData.item.imageUrl}
-          price={itemData.item.price}
-          onSelect={() => {
-            selectItemHandler(itemData.item.id, itemData.item.title);
-          }}
-        >
-          <Button
-            color={Colors.primary}
-            title="View Details"
-            onPress={() => {
+    <View>
+      <FlatList
+        onRefresh={loadProducts}
+        refreshing={isRefreshing}
+        data={allProducts}
+        keyExtractor={(item) => item.id}
+        renderItem={(itemData) => (
+          <ProductItem
+            title={itemData.item.title}
+            image={itemData.item.imageUrl}
+            price={itemData.item.price}
+            onSelect={() => {
               selectItemHandler(itemData.item.id, itemData.item.title);
             }}
-          />
-          <Button
-            color={Colors.primary}
-            title="To Cart"
-            onPress={() => {
-              dispatch(cartActions.addToCart(itemData.item));
-            }}
-          />
-        </ProductItem>
-      )}
-    />
+          >
+            <Button
+              color={Colors.primary}
+              title="View Details"
+              onPress={() => {
+                selectItemHandler(itemData.item.id, itemData.item.title);
+              }}
+            />
+            <Button
+              color={Colors.primary}
+              title="To Cart"
+              onPress={()=>cartHandler(itemData.item)}
+            />
+          </ProductItem>
+        )}
+      />
+      <Snackbar
+        visible={isVisible}
+        onDismiss={() => setIsVisible(false)}
+        duration={2000}
+        style={{ backgroundColor: Colors.primary, borderRadius: 10 }}
+      >
+        Added {thisProduct} to Cart.
+      </Snackbar>
+    </View>
   );
 };
 const styles = StyleSheet.create({

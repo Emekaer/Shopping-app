@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useReducer } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+  useReducer,
+} from "react";
 import {
   View,
   KeyboardAvoidingView,
@@ -12,6 +18,8 @@ import { useSelector, useDispatch } from "react-redux";
 import * as productAction from "../../store/actions/products";
 import Input from "../../components/UI/Input";
 import Colors from "../../constants/Colors";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -42,7 +50,22 @@ const EditProductScreen = (props) => {
   const [isloading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const { productId } = props.route.params;
+  const { route } = props;
+  const { navigation } = props;
+
+  const submitFn = route.params.submit;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: route.params.productId ? "Edit Product" : "Add Product",
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item title="Save" iconName={"md-checkmark"} onPress={submitFn} />
+        </HeaderButtons>
+      ),
+    });
+  }, [submitFn, route, navigation, editedProduct]);
+
+  const { productId } = route.params;
 
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -74,13 +97,10 @@ const EditProductScreen = (props) => {
   const submitHandler = useCallback(async () => {
     Keyboard.dismiss();
 
-
-  if  (!formState.formIsValid) {
-      Alert.alert(
-        "Wrong input!",
-        "Please Check for errors in the form.",
-        [{ text: "Okay" }]
-      );
+    if (!formState.formIsValid) {
+      Alert.alert("Wrong input!", "Please Check for errors in the form.", [
+        { text: "Okay" },
+      ]);
       return;
     }
 
@@ -106,7 +126,7 @@ const EditProductScreen = (props) => {
           )
         );
       }
-      props.navigation.goBack();
+      navigation.goBack();
     } catch (err) {
       setError(err.message);
     }
@@ -115,7 +135,7 @@ const EditProductScreen = (props) => {
   }, [dispatch, productId, formState, Keyboard]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
+    navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
@@ -141,7 +161,6 @@ const EditProductScreen = (props) => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior="padding"
       keyboardVerticalOffset={100}
     >
       <ScrollView>

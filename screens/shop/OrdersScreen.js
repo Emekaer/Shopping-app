@@ -16,10 +16,14 @@ const OrderScreen = (props) => {
   const orders = useSelector((state) => state.orders.order);
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    setIsLoading(true);
-    await dispatch(orderAction.fetchOrders());
-    setIsLoading(false);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setIsLoading(true);
+      await dispatch(orderAction.fetchOrders());
+      setIsLoading(false);
+    };
+
+    fetchOrders();
   }, [dispatch]);
 
   if (isLoading) {
@@ -29,11 +33,11 @@ const OrderScreen = (props) => {
       </View>
     );
   }
-  
+
   if (orders.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>No ordersavailable. Start placing orders now?</Text>
+        <Text>No orders available. Start placing orders now?</Text>
       </View>
     );
   }

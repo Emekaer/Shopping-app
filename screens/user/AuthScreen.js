@@ -104,7 +104,6 @@ const AuthScreen = (props) => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
       keyboardVerticalOffset={50}
       style={styles.screen}
     >
