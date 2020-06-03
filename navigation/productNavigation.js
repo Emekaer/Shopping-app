@@ -142,27 +142,7 @@ const userNavigation = () => {
           ),
         })}
       />
-      <Stack.Screen
-        name="EditProductScreen"
-        component={EditProductScreen}
-        options={(navData) => {
-          const submitFn = navData.route.params.submit;
-          return {
-            headerTitle: navData.route.params.productId
-              ? "Edit Product"
-              : "Add Product",
-            headerRight: () => (
-              <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item
-                  title="Save"
-                  iconName={"md-checkmark"}
-                  onPress={submitFn}
-                />
-              </HeaderButtons>
-            ),
-          };
-        }}
-      />
+      <Stack.Screen name="EditProductScreen" component={EditProductScreen} />
     </Stack.Navigator>
   );
 };

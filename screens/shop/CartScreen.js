@@ -12,9 +12,11 @@ import Colors from "../../constants/Colors";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
 import * as orderActions from "../../store/actions/order";
+import { Snackbar } from "react-native-paper";
 
 const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const cartTotal = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
@@ -37,47 +39,62 @@ const CartScreen = (props) => {
 
   const sendOrderHandler = async () => {
     setIsLoading(true);
+    setIsVisible(true);
     await dispatch(orderActions.addOrder(cartItems, cartTotal));
     setIsLoading(false);
   };
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.summary}>
-        <Text style={styles.summaryText}>
-          Total:{" "}
-          <Text style={styles.amount}>
-            ${Math.round(cartTotal.toFixed(2) * 100) / 100}
+    <View style={{ flex: 1 }}>
+      <View style={styles.screen}>
+        <View style={styles.summary}>
+          <Text style={styles.summaryText}>
+            Total:{" "}
+            <Text style={styles.amount}>
+              ${Math.round(cartTotal.toFixed(2) * 100) / 100}
+            </Text>
           </Text>
-        </Text>
-        {isLoading ? (
-          <ActivityIndicator size="small" color={Colors.primary} />
-        ) : (
-          <Button
-            color={Colors.accent}
-            title="Order Now"
-            disabled={cartItems.length === 0}
-            onPress={sendOrderHandler}
-          />
-        )}
-      </View>
-      <View>
-        <FlatList
-          data={cartItems}
-          keyExtractor={(item) => item.productId}
-          renderItem={(itemData) => (
-            <CartItem
-              quantity={itemData.item.quantity}
-              title={itemData.item.productTitle}
-              amount={itemData.item.sum}
-              delatable
-              onRemove={() => {
-                dispatch(cartActions.removeFromCart(itemData.item.productId));
-              }}
+          {isLoading ? (
+            <ActivityIndicator size="small" color={Colors.primary} />
+          ) : (
+            <Button
+              color={Colors.accent}
+              title="Order Now"
+              disabled={cartItems.length === 0}
+              onPress={sendOrderHandler}
             />
           )}
-        />
+        </View>
+        <View>
+          <FlatList
+            data={cartItems}
+            keyExtractor={(item) => item.productId}
+            renderItem={(itemData) => (
+              <CartItem
+                quantity={itemData.item.quantity}
+                title={itemData.item.productTitle}
+                amount={itemData.item.sum}
+                delatable
+                onRemove={() => {
+                  dispatch(cartActions.removeFromCart(itemData.item.productId));
+                }}
+              />
+            )}
+          />
+        </View>
       </View>
+      <Snackbar
+        visible={isVisible}
+        onDismiss={() => setIsVisible(false)}
+        duration={2000}
+        style={{
+          backgroundColor: Colors.primary,
+          borderRadius: 10,
+          alignItems: "flex-end",
+        }}
+      >
+        Product Ordered
+      </Snackbar>
     </View>
   );
 };

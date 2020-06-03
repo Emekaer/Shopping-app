@@ -66,7 +66,7 @@ const EditProductScreen = (props) => {
   }, [submitFn, route, navigation, editedProduct]);
 
   const { productId } = route.params;
-
+ 
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
   );

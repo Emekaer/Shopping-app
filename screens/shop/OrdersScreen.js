@@ -10,12 +10,20 @@ import { useSelector, useDispatch } from "react-redux";
 import OrderItem from "../../components/shop/OrderItem";
 import * as orderAction from "../../store/actions/order";
 import Colors from "../../constants/Colors";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const OrderScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const orders = useSelector((state) => state.orders.order);
   const dispatch = useDispatch();
 
+  const deleteHandler = () => {
+    return (
+      <View>
+        <Text>Delete</Text>
+      </View>
+    );
+  };
   useEffect(() => {
     const fetchOrders = async () => {
       setIsLoading(true);
@@ -48,11 +56,13 @@ const OrderScreen = (props) => {
         data={orders}
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
-          <OrderItem
-            amount={itemData.item.totalAmount}
-            date={itemData.item.readableDate}
-            items={itemData.item.items}
-          />
+          <Swipeable renderLeftActions={deleteHandler}>
+            <OrderItem
+              amount={itemData.item.totalAmount}
+              date={itemData.item.readableDate}
+              items={itemData.item.items}
+            />
+          </Swipeable>
         )}
       />
     </View>
