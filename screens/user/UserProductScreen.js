@@ -7,7 +7,6 @@ import Colors from "../../constants/Colors";
 import * as productsAction from "../../store/actions/products";
 import { Snackbar } from "react-native-paper";
 
-
 const UserProductScreen = (props) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -18,9 +17,8 @@ const UserProductScreen = (props) => {
         text: "Yes",
         style: "destructive",
         onPress: () => {
-          setIsVisible(true);
           dispatch(productsAction.deleteProduct(id));
-
+          setIsVisible(true);
         },
       },
     ]);
@@ -40,7 +38,7 @@ const UserProductScreen = (props) => {
     );
   }
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={userProducts}
         keyExtractor={(item) => item.id}
@@ -71,17 +69,17 @@ const UserProductScreen = (props) => {
         )}
       />
       <Snackbar
-      visible={isVisible}
-      onDismiss={() => setIsVisible(false)}
-      duration={2000}
-      style={{
-        backgroundColor: Colors.primary,
-        borderRadius: 10,
-        alignItems: "flex-end",
-      }}
-    >
-      Deleted
-    </Snackbar>
+        visible={isVisible}
+        onDismiss={() => setIsVisible(false)}
+        duration={2000}
+        style={{
+          backgroundColor: Colors.primary,
+          borderRadius: 10,
+          alignItems: "flex-end",
+        }}
+      >
+        Deleted
+      </Snackbar>
     </View>
   );
 };

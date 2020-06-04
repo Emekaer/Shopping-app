@@ -1,17 +1,16 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
   useLayoutEffect,
+  useCallback,
   useReducer,
 } from "react";
 import {
   View,
   KeyboardAvoidingView,
   StyleSheet,
-  ScrollView,
   Alert,
-  Keyboard,
+  ScrollView,
   ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +36,7 @@ const formReducer = (state, action) => {
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
+    console.log(state);
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
@@ -53,20 +53,35 @@ const EditProductScreen = (props) => {
   const { route } = props;
   const { navigation } = props;
 
-  const submitFn = route.params.submit;
-  useLayoutEffect(() => {
+  const productId = route.params?.productId;
+
+  const layoutp = useLayoutEffect(() => {
+    console.log("break");
+    console.log(formState);
     navigation.setOptions({
-      headerTitle: route.params.productId ? "Edit Product" : "Add Product",
+      headerTitle: productId ? "Edit Product" : "Add Product",
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item title="Save" iconName={"md-checkmark"} onPress={submitFn} />
+          <Item
+            title="Save"
+            iconName={"md-checkmark"}
+            onPress={submitHandler}
+          />
         </HeaderButtons>
       ),
     });
-  }, [submitFn, route, navigation, editedProduct]);
+  }, [
+    submitHandler,
+    route,
+    navigation,
+    editedProduct,
+    formState,
+    productId,
+    formReducer,
+    inputChangeHandler,
+    dispatchFormState,
+  ]);
 
-  const { productId } = route.params;
- 
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
   );
@@ -88,22 +103,24 @@ const EditProductScreen = (props) => {
     formIsValid: editedProduct ? true : false,
   });
 
-  useEffect(() => {
+useEffect(() => {
     if (error) {
       Alert.alert("An error occured", error, [{ text: "Okay" }]);
     }
   }, [error]);
 
   const submitHandler = useCallback(async () => {
-    Keyboard.dismiss();
-
+    console.log("break  2");
+    console.log(formState);
     if (!formState.formIsValid) {
+      console.log(!formState.formIsValid);
       Alert.alert("Wrong input!", "Please Check for errors in the form.", [
         { text: "Okay" },
       ]);
       return;
     }
 
+    console.log("valid");
     setError(null);
     setIsLoading(true);
     try {
@@ -132,11 +149,16 @@ const EditProductScreen = (props) => {
     }
 
     setIsLoading(false);
-  }, [dispatch, productId, formState, Keyboard]);
-
-  useEffect(() => {
-    navigation.setParams({ submit: submitHandler });
-  }, [submitHandler]);
+  }, [
+    route,
+    navigation,
+    editedProduct,
+    formState,
+    productId,
+    formReducer,
+    inputChangeHandler,
+    dispatchFormState,
+  ]);
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -159,10 +181,7 @@ const EditProductScreen = (props) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      keyboardVerticalOffset={100}
-    >
+    <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={100}>
       <ScrollView>
         <View style={styles.form}>
           <Input
@@ -203,14 +222,11 @@ const EditProductScreen = (props) => {
           )}
           <Input
             id="description"
+            label="Description"
+            errorText="Please enter a valid description!"
             keyboardType="default"
             autoCapitalize="sentences"
             autoCorrect
-            returnKeyType="next"
-            label="Description"
-            errorText="Please add valid Description!"
-            returnKeyType="next"
-            onSubmitEditing={submitHandler}
             multiline
             numberOfLines={3}
             onInputChange={inputChangeHandler}
