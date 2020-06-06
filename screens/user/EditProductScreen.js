@@ -1,4 +1,5 @@
 import React, {
+  useRef,
   useState,
   useEffect,
   useLayoutEffect,
@@ -10,6 +11,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Alert,
+  Keyboard,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
@@ -53,27 +55,12 @@ const formReducer = (state, action) => {
 const EditProductScreen = (props) => {
   const [isloading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const myInput = useRef();
 
   const { route } = props;
   const { navigation } = props;
 
   const productId = route.params?.productId;
-  useEffect(() => {
-    console.log(formState);
-    console.log("break for button area");
-    navigation.setOptions({
-      headerTitle: productId ? "Edit Product" : "Add Product",
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item
-            title="Save"
-            iconName={"md-checkmark"}
-            onPress={submitHandler}
-          />
-        </HeaderButtons>
-      ),
-    });
-  }, [submitHandler, navigation, route, inputChangeHandler, formState]);
 
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -96,6 +83,39 @@ const EditProductScreen = (props) => {
     formIsValid: editedProduct ? true : false,
   });
 
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier,
+      });
+    },
+    [dispatchFormState]
+  );
+
+  const submitFn = async () => {
+    if (myInput.current.isFocused()) {
+      try {
+        await myInput.current.blur();
+      } catch (err) {
+        setError(err);
+      }
+      await Keyboard.dismiss();
+      submitHandler();
+      return;
+    } else {
+      await Keyboard.dismiss();
+      submitHandler();
+      return;
+    }
+  };
+
+ useEffect(() => {
+    myInput.current.focus();
+  }, [myInput]);
+
   useEffect(() => {
     if (error) {
       Alert.alert("An error occured", error, [{ text: "Okay" }]);
@@ -103,9 +123,6 @@ const EditProductScreen = (props) => {
   }, [error]);
 
   const submitHandler = useCallback(async () => {
-    console.log(formState);
-    console.log("break  2 for button iteself");
-
     if (!formState.formIsValid) {
       console.log(!formState.formIsValid);
       Alert.alert("Wrong input!", "Please Check for errors in the form.", [
@@ -152,23 +169,28 @@ const EditProductScreen = (props) => {
     error,
     isLoading,
     navigation,
+    myInput,
   ]);
 
-
-
-  const inputChangeHandler = useCallback(
-    (inputIdentifier, inputValue, inputValidity) => {
-      console.log(formState)
-      console.log("formState @ input change handelr")
-      dispatchFormState({
-        type: FORM_INPUT_UPDATE,
-        value: inputValue,
-        isValid: inputValidity,
-        input: inputIdentifier,
-      });
-    },
-    [dispatchFormState]
-  );
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: productId ? "Edit Product" : "Add Product",
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item title="Save" iconName={"md-checkmark"} onPress={submitFn} />
+        </HeaderButtons>
+      ),
+    });
+  }, [
+    submitHandler,
+    submitFn,
+    navigation,
+    route,
+    inputChangeHandler,
+    formState,
+    dispatchFormState,
+    myInput,
+  ]);
 
   if (isloading) {
     return (
@@ -183,6 +205,7 @@ const EditProductScreen = (props) => {
       <ScrollView>
         <View style={styles.form}>
           <Input
+            forwardRef={myInput}
             id="title"
             keyboardType="default"
             autoCapitalize="sentences"
@@ -196,6 +219,7 @@ const EditProductScreen = (props) => {
             required
           />
           <Input
+            forwardRef={myInput}
             id="imageUrl"
             keyboardType="default"
             returnKeyType="next"
@@ -208,6 +232,10 @@ const EditProductScreen = (props) => {
           />
           {editedProduct ? null : (
             <Input
+              navigation={navigation}
+              submitHandler={submitHandler}
+              Keyboard={Keyboard}
+              forwardRef={myInput}
               id="price"
               keyboardType="decimal-pad"
               returnKeyType="next"
@@ -219,6 +247,7 @@ const EditProductScreen = (props) => {
             />
           )}
           <Input
+            forwardRef={myInput}
             id="description"
             label="Description"
             errorText="Please enter a valid description!"

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, TextInput,} from "react-native";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
@@ -62,8 +62,7 @@ const Input = (props) => {
   };
 
   const lostFocusHandler = () => {
-    dispatch({ type: INPUT_BLUR });
-    
+    dispatch({ type: INPUT_BLUR });    
   };
 
   return (
@@ -71,6 +70,7 @@ const Input = (props) => {
       <Text style={styles.label}>{props.label}</Text>
       <TextInput
         {...props}
+        ref={props.forwardRef}
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
