@@ -57,8 +57,7 @@ const EditProductScreen = (props) => {
   const [error, setError] = useState();
   const myInput = useRef();
 
-  const { route } = props;
-  const { navigation } = props;
+  const { navigation, route } = props;
 
   const productId = route.params?.productId;
 
@@ -112,7 +111,7 @@ const EditProductScreen = (props) => {
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     myInput.current.focus();
   }, [myInput]);
 

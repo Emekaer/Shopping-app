@@ -12,8 +12,12 @@ import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/order";
 import authReducer from "./store/reducers/auth"
 
+
+
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+
+
 
   const rootReducer = combineReducers({
     products: productsReducer,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   View,
   Text,
@@ -14,9 +14,14 @@ import * as cartActions from "../../store/actions/cart";
 import * as orderActions from "../../store/actions/order";
 import { Snackbar } from "react-native-paper";
 
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+
 const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+
+  const { navigation } = props;
 
   const cartTotal = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
@@ -36,6 +41,25 @@ const CartScreen = (props) => {
   });
 
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Cart Items",
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="pay"
+            iconName={"md-cash"}
+            onPress={toPaymentScreen}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [toPaymentScreen]);
+
+  const toPaymentScreen =()=>{
+    navigation.navigate("PaymentScreen")
+  }
 
   const sendOrderHandler = async () => {
     setIsLoading(true);

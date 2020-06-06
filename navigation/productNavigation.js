@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView, Button, View } from "react-native";
 import * as authActions from "../store/actions/auth";
 import Colors from "../constants/Colors";
+import PaymentScreen from "../screens/shop/PaymentScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -72,13 +73,8 @@ const ProductsNavigator = () => {
         })}
         component={ProductDetail}
       />
-      <Stack.Screen
-        name="CartScreen"
-        component={CartScreen}
-        options={(navData) => ({
-          headerTitle: "Your Cart",
-        })}
-      />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
     </Stack.Navigator>
   );
 };
