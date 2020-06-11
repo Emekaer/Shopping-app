@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w820dp-v13\\values-w820dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\hu'p\\.gradle\\caches\\transforms-1\\files-1.1\\jetified-paystack-3.0.12.aar\\b280ddf3281b60d465e7bfb05610330d\\res\\values-w820dp-v13\\values-w820dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,113",
+                        "endColumns": "57,64",
+                        "endOffsets": "108,173"
+                    }
+                }
+            ]
+        }
+    ]
+}

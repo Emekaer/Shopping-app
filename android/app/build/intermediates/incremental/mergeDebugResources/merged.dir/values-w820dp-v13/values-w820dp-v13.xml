@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="paystack_____view____margin">8dp</dimen>
+    <dimen name="paystack__view__horizontal_margin">64dp</dimen>
+</resources>

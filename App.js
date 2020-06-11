@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import productsReducer from "./store/reducers/products";
-import SplashScreen from "expo-splash-screen";
+import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import ReduxThunk from "redux-thunk";
 

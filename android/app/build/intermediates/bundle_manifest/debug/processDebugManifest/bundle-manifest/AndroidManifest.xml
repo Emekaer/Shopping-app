@@ -43,6 +43,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.shoppingapp.MainActivity"
@@ -72,6 +73,18 @@
             android:name="expo.modules.location.services.LocationTaskService"
             android:exported="false" />
 
+        <activity
+            android:name="co.paystack.android.ui.PinActivity"
+            android:theme="@style/Paystack.Dialog.PinEntry" />
+        <activity
+            android:name="co.paystack.android.ui.OtpActivity"
+            android:theme="@style/Paystack.Dialog.OtpEntry" />
+        <activity
+            android:name="co.paystack.android.ui.AuthActivity"
+            android:theme="@style/Paystack.Dialog.OtpEntry" />
+        <activity
+            android:name="co.paystack.android.ui.CardActivity"
+            android:theme="@style/Paystack.Dialog.CardEntry" />
         <activity
             android:name="com.google.android.gms.common.api.GoogleApiActivity"
             android:exported="false"

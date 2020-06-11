@@ -130,6 +130,10 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
+    <color name="pstck_pinpad_default_button_textcolor">#DFE1E2</color>
+    <color name="pstck_pinpad_default_pin_indicator_empty_color">#E0E0E0</color>
+    <color name="pstck_pinpad_default_pin_indicator_filled_color">#C4C4C4</color>
+    <color name="pstck_pinpad_default_prompt_textcolor">#D0D0D0</color>
     <color name="ripple_material_dark">#33ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
@@ -355,6 +359,13 @@
     <dimen name="notification_subtext_size">13sp</dimen>
     <dimen name="notification_top_pad">10dp</dimen>
     <dimen name="notification_top_pad_large_text">5dp</dimen>
+    <dimen name="paystack__view__horizontal_margin">16dp</dimen>
+    <dimen name="paystack__view__margin">5dp</dimen>
+    <dimen name="paystack__view__vertical_margin">16dp</dimen>
+    <dimen name="pstck_pinpad__default_indicator_height">64dp</dimen>
+    <dimen name="pstck_pinpad__default_prompt_padding">24dp</dimen>
+    <dimen name="pstck_pinpad__default_prompt_paddingBottom">16dp</dimen>
+    <dimen name="pstck_pinpad__default_prompt_paddingTop">16dp</dimen>
     <dimen name="subtitle_corner_radius">2dp</dimen>
     <dimen name="subtitle_outline_width">2dp</dimen>
     <dimen name="subtitle_shadow_offset">2dp</dimen>
@@ -568,6 +579,17 @@
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
     <string name="progressbar_description" translatable="false">Progress Bar</string>
+    <string name="pstck_pinpad__app_name">pinpad</string>
+    <string name="pstck_pinpad__num_0">0</string>
+    <string name="pstck_pinpad__num_1">1</string>
+    <string name="pstck_pinpad__num_2">2</string>
+    <string name="pstck_pinpad__num_3">3</string>
+    <string name="pstck_pinpad__num_4">4</string>
+    <string name="pstck_pinpad__num_5">5</string>
+    <string name="pstck_pinpad__num_6">6</string>
+    <string name="pstck_pinpad__num_7">7</string>
+    <string name="pstck_pinpad__num_8">8</string>
+    <string name="pstck_pinpad__num_9">9</string>
     <string name="radiogroup_description" translatable="false">Radio Group</string>
     <string name="rn_tab_description" translatable="false">Tab</string>
     <string name="scrollbar_description" translatable="false">Scroll Bar</string>
@@ -2054,6 +2076,19 @@
     <item name="android:windowEnterAnimation">@anim/catalyst_slide_up</item>
     <item name="android:windowExitAnimation">@anim/catalyst_slide_down</item>
   </style>
+    <style name="Paystack.Dialog" parent="Theme.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+    <style name="Paystack.Dialog.CardEntry" parent="Paystack.Dialog">
+    </style>
+    <style name="Paystack.Dialog.OtpEntry" parent="Paystack.Dialog">
+    </style>
+    <style name="Paystack.Dialog.PinEntry" parent="Paystack.Dialog">
+    </style>
     <style name="Platform.AppCompat" parent="android:Theme.Holo">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
@@ -2665,6 +2700,7 @@
     <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense
     </item>
   </style>
+    <style name="Widget"/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>
     <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid">
@@ -3036,6 +3072,15 @@
          height concerns. -->
     <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
   </style>
+    <style name="Widget.PinPad">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="button_textcolor">@color/pstck_pinpad_default_button_textcolor</item>
+        <item name="prompt_textcolor">@color/pstck_pinpad_default_prompt_textcolor</item>
+        <item name="pin_indicator_filled_color">@color/pstck_pinpad_default_pin_indicator_filled_color</item>
+        <item name="pin_indicator_empty_color">@color/pstck_pinpad_default_pin_indicator_empty_color</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="Widget.Support.CoordinatorLayout" parent="android:Widget">
         <item name="statusBarBackground">#000000</item>
     </style>
@@ -4125,6 +4170,7 @@
         <attr name="android:ttcIndex"/>
     </declare-styleable>
     <declare-styleable name="ForegroundLinearLayout"><attr name="android:foreground"/><attr name="android:foregroundGravity"/><attr format="boolean" name="foregroundInsidePadding"/></declare-styleable>
+    <declare-styleable name="ForegroundView"><attr name="foreground"/><attr name="foregroundInsidePadding"/><attr name="foregroundGravity"/></declare-styleable>
     <declare-styleable name="GenericDraweeHierarchy">
 
     <!-- NOTE: If adding a new attr here, also add to SimpleDraweeView below -->
@@ -4562,6 +4608,7 @@
         <attr format="reference" name="subMenuArrow"/>
     </declare-styleable>
     <declare-styleable name="NavigationView"><attr name="android:background"/><attr name="android:fitsSystemWindows"/><attr name="android:maxWidth"/><attr name="elevation"/><attr format="reference" name="menu"/><attr format="color" name="itemIconTint"/><attr format="color" name="itemTextColor"/><attr format="reference" name="itemBackground"/><attr format="reference" name="itemTextAppearance"/><attr format="reference" name="headerLayout"/><attr format="dimension" name="itemHorizontalPadding"/><attr format="dimension" name="itemIconPadding"/></declare-styleable>
+    <declare-styleable name="PinPadView"><attr format="boolean" name="place_digits_randomly"/><attr format="boolean" name="auto_submit"/><attr format="boolean" name="vibrate_on_incomplete_submit"/><attr format="color" name="pin_indicator_filled_color"/><attr format="color" name="pin_indicator_empty_color"/><attr format="dimension" name="pin_indicator_size"/><attr format="dimension" name="pin_indicator_stroke_width"/><attr format="dimension" name="pin_indicator_spacing"/><attr format="integer" name="pin_length"/><attr format="string" name="prompt_text"/><attr format="color" name="prompt_textcolor"/><attr format="dimension" name="prompt_textsize"/><attr format="dimension" name="prompt_text_padding"/><attr format="dimension" name="prompt_text_paddingTop"/><attr format="dimension" name="prompt_text_paddingBottom"/><attr format="color" name="button_textcolor"/><attr format="dimension" name="button_numeric_textsize"/><attr format="dimension" name="button_alpha_textsize"/><attr format="string" name="button_text_numeric"/><attr format="string" name="button_text_alpha"/><attr format="reference" name="button_drawable"/><attr format="dimension" name="button_drawable_size"/></declare-styleable>
     <declare-styleable name="PopupWindow">
         <!-- Whether the popup window should overlap its anchor view. -->
         <attr format="boolean" name="overlapAnchor"/>

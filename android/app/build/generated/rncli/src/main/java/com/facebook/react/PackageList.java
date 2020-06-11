@@ -18,6 +18,8 @@ import com.shoppingapp.R;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+// react-native-paystack
+import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -71,6 +73,7 @@ public class PackageList {
       new MainReactPackage(mConfig),
       new RNCMaskedViewPackage(),
       new RNGestureHandlerPackage(),
+      new RNPaystackPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage()

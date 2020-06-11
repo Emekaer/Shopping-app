@@ -45,4 +45,6 @@ target 'ShoppingApp' do
   use_native_modules!
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'react-native-paystack', :path => '../node_modules/react-native-paystack'
+
 end

@@ -95,6 +95,7 @@ attr autoSizeMinTextSize
 attr autoSizePresetSizes
 attr autoSizeStepGranularity
 attr autoSizeTextType
+attr auto_submit
 attr background
 attr backgroundImage
 attr backgroundSplit
@@ -137,6 +138,13 @@ attr buttonStyle
 attr buttonStyleSmall
 attr buttonTint
 attr buttonTintMode
+attr button_alpha_textsize
+attr button_drawable
+attr button_drawable_size
+attr button_numeric_textsize
+attr button_text_alpha
+attr button_text_numeric
+attr button_textcolor
 attr cardBackgroundColor
 attr cardCornerRadius
 attr cardElevation
@@ -281,6 +289,8 @@ attr fontProviderQuery
 attr fontStyle
 attr fontVariationSettings
 attr fontWeight
+attr foreground
+attr foregroundGravity
 attr foregroundInsidePadding
 attr gapBetweenBars
 attr goIcon
@@ -388,6 +398,13 @@ attr passwordToggleDrawable
 attr passwordToggleEnabled
 attr passwordToggleTint
 attr passwordToggleTintMode
+attr pin_indicator_empty_color
+attr pin_indicator_filled_color
+attr pin_indicator_size
+attr pin_indicator_spacing
+attr pin_indicator_stroke_width
+attr pin_length
+attr place_digits_randomly
 attr placeholderImage
 attr placeholderImageScaleType
 attr popupMenuStyle
@@ -401,6 +418,12 @@ attr progressBarImage
 attr progressBarImageScaleType
 attr progressBarPadding
 attr progressBarStyle
+attr prompt_text
+attr prompt_text_padding
+attr prompt_text_paddingBottom
+attr prompt_text_paddingTop
+attr prompt_textcolor
+attr prompt_textsize
 attr queryBackground
 attr queryHint
 attr radioButtonStyle
@@ -558,6 +581,7 @@ attr trackTint
 attr trackTintMode
 attr ttcIndex
 attr useCompatPadding
+attr vibrate_on_incomplete_submit
 attr viewAspectRatio
 attr viewInflaterClass
 attr voiceIcon
@@ -705,6 +729,10 @@ color primary_text_default_material_dark
 color primary_text_default_material_light
 color primary_text_disabled_material_dark
 color primary_text_disabled_material_light
+color pstck_pinpad_default_button_textcolor
+color pstck_pinpad_default_pin_indicator_empty_color
+color pstck_pinpad_default_pin_indicator_filled_color
+color pstck_pinpad_default_prompt_textcolor
 color ripple_material_dark
 color ripple_material_light
 color secondary_text_default_material_dark
@@ -932,6 +960,14 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen paystack_____view____margin
+dimen paystack__view__horizontal_margin
+dimen paystack__view__margin
+dimen paystack__view__vertical_margin
+dimen pstck_pinpad__default_indicator_height
+dimen pstck_pinpad__default_prompt_padding
+dimen pstck_pinpad__default_prompt_paddingBottom
+dimen pstck_pinpad__default_prompt_paddingTop
 dimen subtitle_corner_radius
 dimen subtitle_outline_width
 dimen subtitle_shadow_offset
@@ -1085,6 +1121,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable ps_backspace
 drawable redbox_top_border_background
 drawable splashscreen
 drawable splashscreen_image
@@ -1160,6 +1197,7 @@ id adjust_height
 id adjust_width
 id alertTitle
 id all
+id alphabet_text
 id always
 id async
 id auto
@@ -1172,6 +1210,7 @@ id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
 id buttonPanel
+id button_perform_transaction
 id cancel_action
 id catalyst_redbox_title
 id center
@@ -1201,6 +1240,11 @@ id design_menu_item_text
 id design_navigation_view
 id dialog_button
 id disableHome
+id divider_horizontal
+id edit_card_number
+id edit_cvc
+id edit_expiry_month
+id edit_expiry_year
 id edit_query
 id end
 id end_padder
@@ -1238,6 +1282,8 @@ id italic
 id item_touch_helper_previous_elevation
 id labeled
 id largeLabel
+id layout_card_num
+id layout_custom_form
 id left
 id light
 id line1
@@ -1259,6 +1305,7 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id numeric_text
 id off
 id on
 id outline
@@ -1266,8 +1313,25 @@ id parallax
 id parentPanel
 id parent_matrix
 id pin
+id pinbutton_icon
+id pinpadView
 id progress_circular
 id progress_horizontal
+id prompt_text
+id pstck_pinpad__btn_0
+id pstck_pinpad__btn_1
+id pstck_pinpad__btn_2
+id pstck_pinpad__btn_3
+id pstck_pinpad__btn_4
+id pstck_pinpad__btn_5
+id pstck_pinpad__btn_6
+id pstck_pinpad__btn_7
+id pstck_pinpad__btn_8
+id pstck_pinpad__btn_9
+id pstck_pinpad__btn_back
+id pstck_pinpad__btn_done
+id pstck_pinpad__indicator_layout
+id pstck_pinpad__prompt
 id radio
 id react_test_id
 id right
@@ -1361,6 +1425,7 @@ id view_offset_helper
 id view_tag_instance_handle
 id view_tag_native_id
 id visible
+id webView
 id wide
 id withText
 id wrap_content
@@ -1423,6 +1488,10 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
+layout co_paystack_android____activity_auth
+layout co_paystack_android____activity_card
+layout co_paystack_android____activity_otp
+layout co_paystack_android____activity_pin
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -1440,6 +1509,8 @@ layout design_navigation_menu_item
 layout design_text_input_password_icon
 layout dev_loading_view
 layout fps_view
+layout layout_button
+layout layout_pinpad
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout notification_action
@@ -1563,6 +1634,17 @@ string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
 string progressbar_description
+string pstck_pinpad__app_name
+string pstck_pinpad__num_0
+string pstck_pinpad__num_1
+string pstck_pinpad__num_2
+string pstck_pinpad__num_3
+string pstck_pinpad__num_4
+string pstck_pinpad__num_5
+string pstck_pinpad__num_6
+string pstck_pinpad__num_7
+string pstck_pinpad__num_8
+string pstck_pinpad__num_9
 string radiogroup_description
 string rn_tab_description
 string scrollbar_description
@@ -1786,6 +1868,10 @@ style ClockTimePickerDialog
 style ClockTimePickerStyle
 style DialogAnimationFade
 style DialogAnimationSlide
+style Paystack_Dialog
+style Paystack_Dialog_CardEntry
+style Paystack_Dialog_OtpEntry
+style Paystack_Dialog_PinEntry
 style Platform_AppCompat
 style Platform_AppCompat_Light
 style Platform_MaterialComponents
@@ -1983,6 +2069,7 @@ style ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox
 style ThemeOverlay_MaterialComponents_TextInputEditText_FilledBox_Dense
 style ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox
 style ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense
+style Widget
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar
@@ -2104,6 +2191,7 @@ style Widget_MaterialComponents_TextInputLayout_FilledBox_Dense
 style Widget_MaterialComponents_TextInputLayout_OutlinedBox
 style Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense
 style Widget_MaterialComponents_Toolbar
+style Widget_PinPad
 style Widget_Support_CoordinatorLayout
 style redboxButton
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
@@ -2145,6 +2233,7 @@ styleable FlowLayout itemSpacing lineSpacing
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable ForegroundLinearLayout android_foreground android_foregroundGravity foregroundInsidePadding
+styleable ForegroundView foreground foregroundGravity foregroundInsidePadding
 styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
@@ -2159,6 +2248,7 @@ styleable MenuGroup android_enabled android_id android_visible android_menuCateg
 styleable MenuItem android_icon android_enabled android_id android_checked android_visible android_menuCategory android_orderInCategory android_title android_titleCondensed android_alphabeticShortcut android_numericShortcut android_checkable android_onClick actionLayout actionProviderClass actionViewClass alphabeticModifiers contentDescription iconTint iconTintMode numericModifiers showAsAction tooltipText
 styleable MenuView android_windowAnimationStyle android_itemTextAppearance android_horizontalDivider android_verticalDivider android_headerBackground android_itemBackground android_itemIconDisabledAlpha preserveIconSpacing subMenuArrow
 styleable NavigationView android_background android_fitsSystemWindows android_maxWidth elevation headerLayout itemBackground itemHorizontalPadding itemIconPadding itemIconTint itemTextAppearance itemTextColor menu
+styleable PinPadView auto_submit button_alpha_textsize button_drawable button_drawable_size button_numeric_textsize button_text_alpha button_text_numeric button_textcolor pin_indicator_empty_color pin_indicator_filled_color pin_indicator_size pin_indicator_spacing pin_indicator_stroke_width pin_length place_digits_randomly prompt_text prompt_text_padding prompt_text_paddingBottom prompt_text_paddingTop prompt_textcolor prompt_textsize vibrate_on_incomplete_submit
 styleable PopupWindow android_popupBackground android_popupAnimationStyle overlapAnchor
 styleable PopupWindowBackgroundState state_above_anchor
 styleable RecycleListView paddingBottomNoButtons paddingTopNoTitle

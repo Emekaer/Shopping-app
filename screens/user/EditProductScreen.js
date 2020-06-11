@@ -39,10 +39,6 @@ const formReducer = (state, action) => {
     for (const key in updatedValidities) {
       updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
-    console.log(updatedValues);
-    console.log(updatedValidities);
-    console.log(updatedFormIsValid);
-    console.log("state");
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
@@ -166,7 +162,7 @@ const EditProductScreen = (props) => {
     productId,
     formState,
     error,
-    isLoading,
+    isloading,
     navigation,
     myInput,
   ]);

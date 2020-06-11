@@ -1,4 +1,4 @@
-#Thu Jun 11 13:35:12 WAT 2020
+#Thu Jun 11 16:52:42 WAT 2020
 base.2=C\:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.2=classes2.dex
 base.1=C\:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1

@@ -8,7 +8,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/HeaderButton";
 import { Ionicons } from "@expo/vector-icons";
 
-import productOverview from "../screens/shop/ProductOverview";
+import ProductOverview from "../screens/shop/ProductOverview";
 import CartScreen from "../screens/shop/CartScreen";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import ProductDetail from "../screens/shop/ProductDetails";
@@ -40,7 +40,7 @@ const ProductsNavigator = () => {
     <Stack.Navigator screenOptions={defaultNavOps}>
       <Stack.Screen
         name="All Products"
-        component={productOverview}
+        component={ProductOverview}
         options={(navData) => ({
           headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
