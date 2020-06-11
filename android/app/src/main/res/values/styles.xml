@@ -1,8 +1,10 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-    </style>
+  
+      <!-- Main activity theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+  <item name="android:windowBackground">@drawable/splashscreen</item> <!-- this line instructs the system to use 'splashscreen.xml' as a background of the whole application -->
+    <!-- Other style properties -->
+  </style>
 
 </resources>

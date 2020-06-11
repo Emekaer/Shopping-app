@@ -243,9 +243,9 @@ public final class R {
         public static final int TextAppearance_Compat_Notification_Time_Media = 0x7f0e0128;
         public static final int TextAppearance_Compat_Notification_Title = 0x7f0e0129;
         public static final int TextAppearance_Compat_Notification_Title_Media = 0x7f0e012a;
-        public static final int Widget_Compat_NotificationActionContainer = 0x7f0e01db;
-        public static final int Widget_Compat_NotificationActionText = 0x7f0e01dc;
-        public static final int Widget_Support_CoordinatorLayout = 0x7f0e020b;
+        public static final int Widget_Compat_NotificationActionContainer = 0x7f0e01dc;
+        public static final int Widget_Compat_NotificationActionText = 0x7f0e01dd;
+        public static final int Widget_Support_CoordinatorLayout = 0x7f0e020c;
     }
     public static final class styleable {
         private styleable() {}

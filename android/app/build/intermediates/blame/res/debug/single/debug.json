@@ -1008,6 +1008,10 @@
         "source": "C:\\Users\\hu'p\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.1.0.aar\\f1a0b703a84df66b9189f3725d5bcd81\\res\\drawable-hdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
+        "merged": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_splashscreen.xml.flat",
+        "source": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\src\\main\\res\\drawable\\splashscreen.xml"
+    },
+    {
         "merged": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
         "source": "C:\\Users\\hu'p\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.1.0.aar\\f1a0b703a84df66b9189f3725d5bcd81\\res\\drawable-mdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
     },
@@ -1034,6 +1038,10 @@
     {
         "merged": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_cab_background_top_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\hu'p\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.1.0.aar\\f1a0b703a84df66b9189f3725d5bcd81\\res\\drawable-mdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_splashscreen_image.png.flat",
+        "source": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\src\\main\\res\\drawable\\splashscreen_image.png"
     },
     {
         "merged": "C:\\Users\\hu'p\\Desktop\\Shopping-app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_scrubber_primary_mtrl_alpha.9.png.flat",

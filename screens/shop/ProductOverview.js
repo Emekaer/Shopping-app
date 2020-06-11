@@ -114,7 +114,7 @@ const ProductOverViewScreen = (props) => {
             <Button
               color={Colors.primary}
               title="To Cart"
-              onPress={()=>cartHandler(itemData.item)}
+              onPress={() => cartHandler(itemData.item)}
             />
           </ProductItem>
         )}
