@@ -17,6 +17,8 @@ import RNPaystack from "react-native-paystack";
 import { paystack } from "../../.ENV/key";
 import Input from "../../components/UI/Input";
 import { ScrollView } from "react-native-gesture-handler";
+import { pay } from "../../store/actions/pay";
+import { useDispatch } from "react-redux";
 
 RNPaystack.init({ publicKey: paystack.public });
 
@@ -49,6 +51,7 @@ const PaymentScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const myInput = useRef();
+  const dispatch = useDispatch();
 
   const { navigation, route } = props;
 
@@ -115,6 +118,7 @@ const PaymentScreen = (props) => {
       })
         .then((response) => {
           console.log(response); // do stuff with the token
+          dispatch(pay(response));
         })
         .catch((error) => {
           console.log(error); // error is a javascript Error object
