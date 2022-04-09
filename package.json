@@ -15,7 +15,7 @@
     "expo-font": "^8.0.0",
     "expo-splash-screen": "^0.2.3",
     "linear-gradient": "^1.0.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "native-base": "2.13.8",
     "rave-reactnative-wrapper": "^2.0.1",
     "react": "~16.9.0",
